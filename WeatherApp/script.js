@@ -6,6 +6,8 @@ const date = document.querySelector(".datei");
 const condition = document.querySelector(".conditioni");
 const search = document.querySelector(".search");
 const btn = document.querySelector(".btn");
+const img = document.querySelector(".iconi");
+
 
 btn.addEventListener('click', searchForLocation);
 let target = "kolkata";
@@ -15,25 +17,28 @@ const fetchWeather = async (targetW) => {
     
     let result = await fetch(url);
     let data = await result.json();
-    console.log(data);
+    // console.log(data);
 
     let temp = data.current.temp_c;
     let city1 = data.location.name;
     let date1 = data.location.localtime;
     let condition1 = data.current.condition.text;
-    updateDetails(temp, city1, date1, condition1);
+    let icon1 = data.current.condition.icon;
+    console.log(icon1);
+    updateDetails(temp, city1, date1, condition1,icon1);
 };
-function updateDetails(temp, city1, date1, condition1){    
-
+function updateDetails(temp, city1, date1, condition1,icon1){    
+    
     let splitDate = date1.split(" ")[0];
     let splitTime= date1.split(" ")[1];
     // let currDay = daysName(new Date(splitDate).getDay());
     let currDay = days[new Date(splitDate).getDay()];
     temparature.innerText = temp + "°C";
     city.innerText = "Location : " + city1;
-    date.innerText = `Its ${currDay} 
+    date.innerText = `Its ${currDay}; 
     ${splitTime} ${splitDate}`;
     condition.innerText = condition1;
+    img.src=icon1;
 }
 
 function searchForLocation(e){
